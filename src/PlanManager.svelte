@@ -7,11 +7,11 @@ import PageHeader from './PageHeader.svelte';
 import Plans from './Plans.svelte';
 import TopSpacer from './SpacerTop.svelte';
 
-export let on_signup = false;
+// export let on_signup = false;
 
 const title = 'My OttoPay Plan';
 
-let selectedPlan = null;
+let selectedPlan = 'basic';
 
 const handleCommand = (e) => {
 	// TODO Dev only
