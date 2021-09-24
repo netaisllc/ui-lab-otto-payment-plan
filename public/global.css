@@ -1,63 +1,142 @@
-html, body {
-	position: relative;
-	width: 100%;
-	height: 100%;
-}
+:root {
+	--otto-box-shadow: 0px 3px 12px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.05), 0px 2px 8px rgba(0, 0, 0, 0.05);
+	--otto-box-shadow-scrolled: 0 3px 6px rgba(0, 0, 0, 0.13), 0 3px 6px rgba(0, 0, 0, 0.2);
 
-body {
-	color: #333;
+	--otto-color-backdrop: #EEEDEF;
+	--otto-color-background: #FEFDFF;
+	--otto-color-black-15: #d9d9d9;
+	--otto-color-black-25: #BFBFBF;
+	--otto-color-black-50: #666666;
+	--otto-color-card-blue: #324ce5;
+	--otto-color-disabled: #C4C4C4;
+	--otto-color-halfBlack: #666666;
+	--otto-color-hud-details: #383838;
+	--otto-color-midnight: #27165D;
+	--otto-color-negative: #FF4646;
+	--otto-color-primary: #560AC7;
+	--otto-color-pureBlack: #000000;
+	--otto-color-quarterBlack: #BFBFBF;
+
+	--otto-font-body: 'Poppins', Verdana, Arial, Helvetica, sans-serif;
+	--otto-font-headline: 'Apercu Pro', 'Apercu Pro Bold', 'Apercu', 'Arial Black', Arial, Helvetica, sans-serif;	
+
+	--otto-gradient-expense-link: linear-gradient(90deg, #009edb -36.36%, #6002ee 73.01%, #eed1df 151.14%);
+	--otto-gradient-primary: linear-gradient(90deg, #009edb -36.36%, #6002ee 73.01%, #eed1df 151.14%);
+
+	--otto-height-header: 66px;
+	--otto-height-linkexpenses-fixed-header: 146px;
+
+	--otto-max-width-page: 48rem;
+
+	--otto-padding-card: 16px;
+	--otto-padding-page: 24px;
+ }
+
+* {
 	margin: 0;
-	padding: 8px;
-	box-sizing: border-box;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-}
-
-a {
-	color: rgb(0,100,200);
-	text-decoration: none;
-}
-
-a:hover {
-	text-decoration: underline;
-}
-
-a:visited {
-	color: rgb(0,80,160);
-}
-
-label {
-	display: block;
-}
-
-input, button, select, textarea {
+	padding: 0;
+	font-size: 1rem;
 	font-family: inherit;
-	font-size: inherit;
-	-webkit-padding: 0.4em 0;
-	padding: 0.4em;
-	margin: 0 0 0.5em 0;
+  }
+  
+  html {
 	box-sizing: border-box;
-	border: 1px solid #ccc;
-	border-radius: 2px;
+  }
+  
+  *, *::before, *::after {
+	box-sizing: inherit;
+  }
+
+html, body {
+	background-color: #eaeaea;
+	font-size: 16px;
+	line-height: 20px;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	width: 100vw;
 }
 
-input:disabled {
-	color: #ccc;
+@font-face {
+    font-family: Apercu;
+    src: url( "/fonts/apercu-black-pro.otf" ) format( "opentype" );
 }
 
-button {
-	color: #333;
-	background-color: #f4f4f4;
-	outline: none;
+@font-face {
+    font-family: Apercu;
+    font-weight: bold;
+    src: url( "/fonts/apercu-bold-pro.otf" ) format( "opentype" );
 }
 
-button:disabled {
-	color: #999;
+.subhead {
+	font-family: var(--otto-font-body);
+	font-size: 0.94rem;
+	font-weight: 400;
+	letter-spacing: 0.01em;
+	line-height: 1.25rem;
 }
 
-button:not(:disabled):active {
-	background-color: #ddd;
+.black, .black-100,
+.black-full {
+	color: var(--otto-color-pureBlack);
 }
 
-button:focus {
-	border-color: #666;
+.black-25 {
+	color: var(--otto-color-black-25);
+}
+
+.std,
+.standard,
+.text-std,
+.text-standard {
+	font-family: var(--otto-font-body);
+	font-weight: 400;
+	font-size: 1.0625rem;
+	line-height: 1.5rem;
+}
+
+.centered,
+.text-centered {
+	text-align: center;
+}
+
+.caption {
+	font-family: Poppins;
+	font-weight: 300;
+	font-size: 0.75rem;
+	line-height: 0.875rem;
+	letter-spacing: 0.01em;
+}
+
+.hide, .hidden {
+	display: none;
+	visibility: hidden;
+}
+
+.flx {
+	display: flex;
+}
+.flx-col {
+	flex-direction: column;
+}
+.aln-center {
+	align-items: center;
+}
+.jst-between {
+	justify-content: space-between;
+}
+.jst-center {
+	justify-content: center;
+}
+.jst-end {
+	justify-content: flex-end;
+}
+.jst-start {
+	justify-content: flex-start;
+}
+
+.flx-centered {
+	align-items: center;
+	display: flex;
+	justify-content: center;
 }
