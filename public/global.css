@@ -68,12 +68,76 @@ html, body {
     src: url( "/fonts/apercu-bold-pro.otf" ) format( "opentype" );
 }
 
-.subhead {
+/* Typography ramp */ 
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: var(--otto-font-headline);
+	font-weight: 400;
+	margin: 0;
+	padding: 0;
+}
+
+h1, .large-title {
+	font-family: 'Apercu Pro Black', 'Apercu Pro Bold', 'Apercu', Arial, Helvetica, sans-serif;
+	font-size: 2.5rem;
+	font-weight: 900;
+	letter-spacing: 0.005em;
+	line-height: 2.65rem;
+}
+
+h2, .title-1,
+h3, .title-2{
+	font-size: 1.875rem;
+	font-weight: 700;
+	letter-spacing: 0.005em;
+	line-height: 2.15625rem;
+}
+
+h3, .title-2 {
+	font-size: 1.5rem;
+	line-height: 1.75rem;
+}
+
+h4, .title-3 {
+	font-family: var(--otto-font-body);
+	font-weight: 500;
+	font-size: 1.25rem;
+	letter-spacing: 0.015em;
+	line-height: 1.4375rem;	
+}
+
+h5 {
+	font-size: 1.25rem;
+	font-weight: 900;
+	letter-spacing: 0.0005em;
+	line-height: 1.4375rem;	
+}
+
+h6, .subhead {
 	font-family: var(--otto-font-body);
 	font-size: 0.94rem;
 	font-weight: 400;
 	letter-spacing: 0.01em;
 	line-height: 1.25rem;
+}
+
+/* body */
+.std,
+.standard,
+.text-std,
+.text-standard {
+	font-family: var(--otto-font-body);
+	font-weight: 400;
+	font-size: 1.0625rem;
+	line-height: 1.5rem;
+}
+
+.caption {
+	font-family: Poppins;
+	font-weight: 300;
+	font-size: 0.75rem;
+	line-height: 0.875rem;
+	letter-spacing: 0.01em;
 }
 
 .black, .black-100,
@@ -85,28 +149,14 @@ html, body {
 	color: var(--otto-color-black-25);
 }
 
-.std,
-.standard,
-.text-std,
-.text-standard {
-	font-family: var(--otto-font-body);
-	font-weight: 400;
-	font-size: 1.0625rem;
-	line-height: 1.5rem;
-}
+
 
 .centered,
 .text-centered {
 	text-align: center;
 }
 
-.caption {
-	font-family: Poppins;
-	font-weight: 300;
-	font-size: 0.75rem;
-	line-height: 0.875rem;
-	letter-spacing: 0.01em;
-}
+
 
 .hide, .hidden {
 	display: none;

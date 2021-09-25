@@ -1,4 +1,6 @@
 <script>
+import { fly } from 'svelte/transition';
+
 import AdviceTextBlock from './AdviceText.svelte';
 import CommandButton from './CommandButton.svelte';
 import IntroductionTextBlock from './IntroductionText.svelte';
@@ -6,6 +8,8 @@ import Legal from './Legal.svelte';
 import PageHeader from './PageHeader.svelte';
 import Plans from './Plans.svelte';
 import TopSpacer from './SpacerTop.svelte';
+
+import { sample } from './store';
 
 // export let on_signup = false;
 
@@ -16,6 +20,7 @@ let selectedPlan = 'basic';
 const handleCommand = (e) => {
 	// TODO Dev only
 	alert(`You should confirm the plan ${selectedPlan.toUpperCase()} here.`);
+	$sample = 'home';
 };
 
 const handleLegal = (e) => {
@@ -38,7 +43,7 @@ const handleSelection = (e) => {
 }
 </style>
 
-<section class="page">
+<section class="page" transition:fly="{{ duration: 300, x: 600 }}">
 	<TopSpacer />
 	<PageHeader title="{title}" fill="#560AC7" />
 	<IntroductionTextBlock />

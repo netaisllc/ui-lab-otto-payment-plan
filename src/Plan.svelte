@@ -1,6 +1,8 @@
 <script>
 import { createEventDispatcher } from 'svelte';
 
+import FilledArrowRight from './FilledArrowRight.svelte';
+
 const send = createEventDispatcher();
 
 export let amount = '$0.00';
@@ -27,6 +29,7 @@ const emit = () => {
 };
 
 $: adjusted_point_3 = developPoint3(point_3);
+$: fill = selected ? '#ffffff' : '#560AC7';
 $: use_span = Array.isArray(adjusted_point_3) ? true : false;
 </script>
 
@@ -122,14 +125,18 @@ $: use_span = Array.isArray(adjusted_point_3) ? true : false;
 }
 
 .plan-point {
+	align-items: center;
 	color: var(--otto-color-black-50);
+	display: flex;
+	position: relative;
+	padding-left: 1rem;
+}
+.point-text {
 	font-family: var(--otto-font-body);
 	font-size: 0.925rem;
 	font-weight: 300;
 	letter-spacing: 0.01em;
 	line-height: 1.5rem;
-	position: relative;
-	padding-left: 1rem;
 }
 .plan-point.on-grid {
 	grid-column: 2;
@@ -138,16 +145,11 @@ $: use_span = Array.isArray(adjusted_point_3) ? true : false;
 .selected .plan-point {
 	color: #ffffff;
 }
-.plan-point:before {
-	color: var(--otto-color-primary);
-	content: '\25b6 ';
+.container-arrow {
 	font-size: 8px;
-	left: 2px;
+	left: 0;
 	position: absolute;
-	top: 0;
-}
-.selected .plan-point:before {
-	color: white;
+	top: 4px;
 }
 
 .point-1 {
@@ -192,15 +194,37 @@ $: use_span = Array.isArray(adjusted_point_3) ? true : false;
 	<div class="corner-mark">{ribbon}</div>
 	<div class="check-circle on-grid"></div>
 	<div class="payment-amount on-grid">{amount}</div>
-	<div class="plan-point on-grid point-1">{point_1}</div>
-	<div class="plan-point on-grid point-2">{point_2}</div>
+
+	<div class="plan-point on-grid point-1">
+		<div class="container-arrow">
+			<FilledArrowRight fill="{fill}" height="{14}" width="{14}" />
+		</div>
+		<div class="point-text">{point_1}</div>
+	</div>
+
+	<div class="plan-point on-grid point-2">
+		<div class="container-arrow">
+			<FilledArrowRight fill="{fill}" height="{14}" width="{14}" />
+		</div>
+		<div class="point-text">{point_2}</div>
+	</div>
 
 	{#if use_span}
 		<div class="plan-point on-grid point-3">
-			{adjusted_point_3[0]}
-			<span>{adjusted_point_3[1]}</span>
+			<div class="container-arrow">
+				<FilledArrowRight fill="{fill}" height="{14}" width="{14}" />
+			</div>
+			<div class="point-text">
+				{adjusted_point_3[0]}
+				<span>&nbsp;{adjusted_point_3[1]}</span>
+			</div>
 		</div>
 	{:else}
-		<div class="plan-point on-grid point-3">{adjusted_point_3}</div>
+		<div class="plan-point on-grid point-3">
+			<div class="container-arrow">
+				<FilledArrowRight fill="{fill}" height="{14}" width="{14}" />
+			</div>
+			<div class="point-text">{adjusted_point_3}</div>
+		</div>
 	{/if}
 </div>

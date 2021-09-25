@@ -1,17 +1,28 @@
 <script>
+import Home from './Home.svelte';
+import PlanChangeConfirmed from './PlanChangeConfirmed.svelte';
 import PlanManager from './PlanManager.svelte';
+
+import { sample } from './store';
 </script>
 
 <style>
 main {
-	/*align-items: center;
-	display: flex;
-	justify-content: center; */
 	overflow-y: auto;
 	width: 100vw;
 }
 </style>
 
 <main>
-	<PlanManager on_signup="{true}" />
+	{#if $sample === 'home'}
+		<Home />
+	{/if}
+
+	{#if $sample === 'plan_change'}
+		<PlanChangeConfirmed />
+	{/if}
+
+	{#if $sample === 'plan_signup'}
+		<PlanManager on_signup="{true}" />
+	{/if}
 </main>

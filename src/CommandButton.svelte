@@ -1,13 +1,16 @@
 <script>
 import { createEventDispatcher } from 'svelte';
 
-const send = createEventDispatcher();
+export let text = 'Confirm Plan';
+export let theme = 'primary';
 
-const text = 'Confirm Plan';
+const send = createEventDispatcher();
 
 const confirm = (e) => {
 	send('event', { topic: 'PLAN_CONFIRMED' });
 };
+
+$: cls = theme === 'primary' ? 'primary' : 'inverted';
 </script>
 
 <style>
@@ -33,8 +36,13 @@ const confirm = (e) => {
 	transition: all 150ms ease-in-out;
 	width: 100%;
 }
+.button.inverted {
+	background: white;
+	box-shadow: one;
+	color: var(--otto-color-primary);
+}
 </style>
 
 <div class="container-button">
-	<button class="button text-standard" on:click="{confirm}">{text}</button>
+	<button class="button text-standard {cls}" on:click="{confirm}">{text}</button>
 </div>

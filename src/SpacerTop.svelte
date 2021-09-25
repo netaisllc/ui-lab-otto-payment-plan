@@ -1,9 +1,18 @@
+<script>
+export let theme = 'default';
+</script>
+
 <style>
 .spacer-top {
-	background-color: var(--otto-color-background);
-	height: 44px;
+	height: 16px;
 	width: 100%;
+}
+.default {
+	background-color: var(--otto-color-background);
+}
+.primary {
+	background-color: var(--otto-color-primary);
 }
 </style>
 
-<div class="spacer-top reduce-to-30px"></div>
+<div class="spacer-top reduce-to-30px {theme}"></div>
