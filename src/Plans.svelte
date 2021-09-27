@@ -1,21 +1,24 @@
 <script>
 import { createEventDispatcher } from 'svelte';
 import Plan from './Plan.svelte';
+import { getNextPaymentDueOnDates } from './utils';
 
 const send = createEventDispatcher();
 
+export let on_signup = false;
 export let total_amount = 0;
 
+const dueDates = getNextPaymentDueOnDates();
 let amounts;
-let statements;
 
 let plans = [
 	{
 		amount: '$TOTAL',
-		name: 'basic',
+		name: 'monthly',
 		point_1: 'Paid on the 1st of every month',
 		point_2: '$CASHBACK in monthly cash back',
 		point_3: '$HALF charged today',
+		change_1: 'Switch and pay $HALF today',
 		ribbon: '+1% Cash Back',
 		selected: true,
 	},
@@ -24,7 +27,8 @@ let plans = [
 		name: 'biweekly',
 		point_1: 'Paid on or around Friday',
 		point_2: '$QUARTER charged today',
-		point_3: 'Next payment, #Friday Oct 16',
+		point_3: 'NEXT_PAYMENT#BIWEEKLY',
+		change_1: 'Switch and pay $HALF today',
 		ribbon: 'Bi-Weekly',
 		selected: false,
 	},
@@ -33,7 +37,8 @@ let plans = [
 		name: 'weekly',
 		point_1: 'Paid on or around Friday',
 		point_2: '1st payment due today',
-		point_3: 'Next payment, #Friday Oct 8',
+		point_3: 'NEXT_PAYMENT#WEEKLY',
+		change_1: 'Switch and pay $HALF today',
 		ribbon: 'Weekly',
 		selected: false,
 	},
@@ -67,20 +72,28 @@ const developStatements = (amts) => {
 	const replacer = (str) => {
 		let value;
 		if (str.includes('$TOTAL')) {
-			value = str.replace('$TOTAL', amts.total);
-			return `$${value}`;
+			value = str.replace('$TOTAL', `$${amts.total}`);
+			return value;
 		}
 		if (str.includes('$HALF')) {
-			value = str.replace('$HALF', amts.half);
-			return `$${value}`;
+			value = str.replace('$HALF', `$${amts.half}`);
+			return value;
 		}
 		if (str.includes('$QUARTER')) {
-			value = str.replace('$QUARTER', amts.quarter);
-			return `$${value}`;
+			value = str.replace('$QUARTER', `$${amts.quarter}`);
+			return value;
 		}
 		if (str.includes('$CASHBACK')) {
-			value = str.replace('$CASHBACK', amts.cashback);
-			return `$${value}`;
+			value = str.replace('$CASHBACK', `$${amts.cashback}`);
+			return value;
+		}
+		// Retain the # sign for later string handling
+		if (str === 'NEXT_PAYMENT#BIWEEKLY') {
+			return `Next payment, #${dueDates.biweekly}`;
+		}
+		// Retain the # sign for later string handling
+		if (str === 'NEXT_PAYMENT#WEEKLY') {
+			return `Next payment, #${dueDates.weekly}`;
 		}
 		return str;
 	};
@@ -111,7 +124,7 @@ const handleSelection = (e) => {
 };
 
 $: amounts = developAmounts(total_amount);
-$: statements = developStatements(amounts);
+$: developStatements(amounts);
 </script>
 
 <style>
@@ -125,10 +138,12 @@ $: statements = developStatements(amounts);
 	{#each plans as plan}
 		<Plan
 			amount="{plan.amount}"
+			on_signup="{on_signup}"
 			plan="{plan.name}"
 			point_1="{plan.point_1}"
 			point_2="{plan.point_2}"
 			point_3="{plan.point_3}"
+			change_1="{plan.change_1}"
 			ribbon="{plan.ribbon}"
 			selected="{plan.selected}"
 			on:event="{handleSelection}" />

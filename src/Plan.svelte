@@ -5,12 +5,23 @@ import FilledArrowRight from './FilledArrowRight.svelte';
 
 const send = createEventDispatcher();
 
+// Total money of payment plan
 export let amount = '$0.00';
+// Second plan point (used only for changing plans)
+export let change_1 = '';
+// Boolean; is the context a new signup?
+export let on_signup = false;
+// Plan name
 export let plan = '';
+// First plan point, used for both signup and plan-change use cases
 export let point_1 = '';
+// Second plan point; used only for signup
 export let point_2 = '';
+// Third plan point; used only for signup
 export let point_3 = '';
+// Upper right corner visual treatment text
 export let ribbon = '';
+// Boolean; is this plan selected?
 export let selected = false;
 
 let adjusted_point_3;
@@ -39,7 +50,7 @@ $: use_span = Array.isArray(adjusted_point_3) ? true : false;
 	border-radius: 8px;
 	box-shadow: var(--otto-box-shadow);
 	cursor: pointer;
-	height: 150px;
+	height: 128px;
 	margin-bottom: 1.333rem;
 	position: relative;
 	width: 100%;
@@ -50,6 +61,9 @@ $: use_span = Array.isArray(adjusted_point_3) ? true : false;
 	gap: 0;
 	grid-template-columns: 60px 1fr;
 	grid-template-rows: 24px 32px repeat(3, 24px) 1fr;
+}
+.plan.on_signup {
+	height: 150px;
 }
 
 .plan.selected {
@@ -190,11 +204,12 @@ $: use_span = Array.isArray(adjusted_point_3) ? true : false;
 }
 </style>
 
-<div class="plan on-grid" class:selected data-plan="{plan}" on:click="{emit}">
+<div class="plan on-grid" class:selected class:on_signup data-plan="{plan}" on:click="{emit}">
 	<div class="corner-mark">{ribbon}</div>
 	<div class="check-circle on-grid"></div>
 	<div class="payment-amount on-grid">{amount}</div>
 
+	<!-- Plan point 1 -->
 	<div class="plan-point on-grid point-1">
 		<div class="container-arrow">
 			<FilledArrowRight fill="{fill}" height="{14}" width="{14}" />
@@ -202,29 +217,65 @@ $: use_span = Array.isArray(adjusted_point_3) ? true : false;
 		<div class="point-text">{point_1}</div>
 	</div>
 
-	<div class="plan-point on-grid point-2">
-		<div class="container-arrow">
-			<FilledArrowRight fill="{fill}" height="{14}" width="{14}" />
+	{#if on_signup}
+		<!-- Plan point 2 (signup)-->
+		<div class="plan-point on-grid point-2">
+			<div class="container-arrow">
+				<FilledArrowRight fill="{fill}" height="{14}" width="{14}" />
+			</div>
+			<div class="point-text">{point_2}</div>
 		</div>
-		<div class="point-text">{point_2}</div>
-	</div>
 
-	{#if use_span}
-		<div class="plan-point on-grid point-3">
-			<div class="container-arrow">
-				<FilledArrowRight fill="{fill}" height="{14}" width="{14}" />
+		{#if use_span}
+			<!-- Plan point 3 (signup)-->
+			<div class="plan-point on-grid point-3">
+				<div class="container-arrow">
+					<FilledArrowRight fill="{fill}" height="{14}" width="{14}" />
+				</div>
+				<div class="point-text">
+					{adjusted_point_3[0]}
+					<span>{adjusted_point_3[1]}</span>
+				</div>
 			</div>
-			<div class="point-text">
-				{adjusted_point_3[0]}
-				<span>&nbsp;{adjusted_point_3[1]}</span>
+		{:else}
+			<div class="plan-point on-grid point-3">
+				<div class="container-arrow">
+					<FilledArrowRight fill="{fill}" height="{14}" width="{14}" />
+				</div>
+				<div class="point-text">{adjusted_point_3}</div>
 			</div>
-		</div>
-	{:else}
-		<div class="plan-point on-grid point-3">
-			<div class="container-arrow">
-				<FilledArrowRight fill="{fill}" height="{14}" width="{14}" />
+		{/if}
+	{/if}
+
+	{#if !on_signup}
+		{#if selected}
+			{#if use_span}
+				<!-- Plan point 2 (plan change, selected)-->
+				<div class="plan-point on-grid point-2">
+					<div class="container-arrow">
+						<FilledArrowRight fill="{fill}" height="{14}" width="{14}" />
+					</div>
+					<div class="point-text">
+						{adjusted_point_3[0]}
+						<span>{adjusted_point_3[1]}</span>
+					</div>
+				</div>
+			{:else}
+				<div class="plan-point on-grid point-2">
+					<div class="container-arrow">
+						<FilledArrowRight fill="{fill}" height="{14}" width="{14}" />
+					</div>
+					<div class="point-text">{adjusted_point_3}</div>
+				</div>
+			{/if}
+		{:else}
+			<!-- Plan point 2 (plan change, not selected)-->
+			<div class="plan-point on-grid point-2">
+				<div class="container-arrow">
+					<FilledArrowRight fill="{fill}" height="{14}" width="{14}" />
+				</div>
+				<div class="point-text">{change_1}</div>
 			</div>
-			<div class="point-text">{adjusted_point_3}</div>
-		</div>
+		{/if}
 	{/if}
 </div>

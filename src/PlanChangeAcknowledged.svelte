@@ -5,13 +5,35 @@ import CheckCircleIcon from './CircleCheckmark.svelte';
 import CommandButton from './CommandButton.svelte';
 import TopSpacer from './SpacerTop.svelte';
 
-import { sample } from './store';
+import { paymentPlan, sample, totalAmount } from './store';
+import { getNextPaymentDueOnDates, upperFirst } from './utils';
+
+let amount;
+
+const developAmount = (plan, total) => {
+	if ($paymentPlan === 'monthly') {
+		return `$${($totalAmount / 100).toFixed(2)}`;
+	}
+
+	if ($paymentPlan === 'biweekly') {
+		return `$${($totalAmount / 100 / 2).toFixed(2)}`;
+	}
+
+	if ($paymentPlan === 'weekly') {
+		return `$${($totalAmount / 100 / 4).toFixed(2)}`;
+	}
+};
 
 const handleCommand = (e) => {
 	// TODO Dev only
 	alert(`You should navigate to Dashboard here.`);
 	$sample = 'home';
 };
+
+$: amount = developAmount(paymentPlan, totalAmount);
+$: dueOn = getNextPaymentDueOnDates($paymentPlan);
+$: nicePlan = upperFirst($paymentPlan);
+$: showDueOn = $paymentPlan === 'monthly' ? false : true;
 </script>
 
 <style>
@@ -125,18 +147,20 @@ const handleCommand = (e) => {
 		</div>
 
 		<div class="container-hero">
-			<h1>Updated to <br />Bi-Weekly Payments!</h1>
+			<h1>Updated to <br />{nicePlan} Payments!</h1>
 		</div>
 
-		<div class="container-lead text-standard">
-			Your next payment of $125.50 will be charged on or around Friday Oct 30.
-		</div>
+		{#if showDueOn}
+			<div class="container-lead text-standard">
+				Your next payment of {amount} will be charged on or around {dueOn[$paymentPlan]}.
+			</div>
+		{/if}
 	</div>
 
 	<div class="fill two"></div>
 
 	<div class="container-button">
-		<CommandButton theme="inverted" text="Dashboard" on:event="{handleCommand}" />
+		<CommandButton theme="inverted" on:event="{handleCommand}" />
 	</div>
 
 	<div class="fill three"></div>

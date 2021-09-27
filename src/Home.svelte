@@ -1,10 +1,9 @@
 <script>
 import { fade } from 'svelte/transition';
-import { sample } from './store';
+import { sample, totalAmount } from './store';
 
+const planChangeAcknowledged = () => ($sample = 'plan_change_acknowledged');
 const planChange = () => ($sample = 'plan_change');
-// const planDashboard = () => ($sample = 'plan_dashboard');
-const planDashboard = () => ($sample = 'home');
 const planSignup = () => ($sample = 'plan_signup');
 </script>
 
@@ -34,37 +33,51 @@ h1 {
 	letter-spacing: 0.05rem;
 	line-height: 40pt;
 }
-h3,
-button {
-	color: #fafafa;
-	font-family: 'Open Sans', sans-serif;
-	font-weight: 300;
-	font-size: 1.333rem;
-	letter-spacing: 0.05rem;
-	line-height: 2.5rem;
-}
-
 h3 {
 	color: aquamarine;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1.333rem;
+	font-weight: 300;
+	letter-spacing: 0.05rem;
+	line-height: 2.5rem;
 	padding-left: 0.5rem;
 }
 
 button {
-	background-color: #262626;
-	border: 1px solid transparent;
-	border-radius: 2px;
-	font-size: 0.75rem;
-	font-weight: 400;
+	background-color: #242424;
+	border: none;
+	padding: 0 10px;
+}
+
+button,
+input {
+	color: #fafafa;
+	font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+	font-size: 0.875rem;
+	font-weight: 300;
+	height: 2rem;
 	letter-spacing: 0.025rem;
-	line-height: 1rem;
-	margin: 0 0 0.75rem;
-	padding: 5px 10px;
+	line-height: 2rem;
+}
+
+input {
+	background-color: #494949;
+	border: none;
+	border-bottom: 1px solid aquamarine;
+	margin: 0 0 0 1rem;
+	padding: 5px;
+	width: 5rem;
 }
 
 .samples {
 	display: flex;
 	flex-direction: column;
-	align-items: flex-start;
+}
+
+.container-view {
+	height: 2.5rem;
+	margin: 0 0 0.25rem 0;
+	width: 100%;
 }
 </style>
 
@@ -75,8 +88,19 @@ button {
 	</div>
 
 	<div class="samples">
-		<button on:click="{planSignup}">Payment Plan (Signup)</button>
-		<button on:click="{planDashboard}">Payment Plan (Dashboard)</button>
-		<button on:click="{planChange}">Plan Change Confirmed</button>
+		<div class="container-view flx aln-center jst-between">
+			<button on:click="{planSignup}">Payment Plan (Signup)</button>
+			<input bind:value="{$totalAmount}" />
+		</div>
+
+		<div class="container-view flx aln-center jst-between">
+			<button on:click="{planChange}">Payment Plan (Change plan)</button>
+			<input bind:value="{$totalAmount}" />
+		</div>
+
+		<div class="container-view flx aln-center jst-between">
+			<button on:click="{planChangeAcknowledged}">Plan Change Acknowledgement</button>
+			<input bind:value="{$totalAmount}" />
+		</div>
 	</div>
 </section>

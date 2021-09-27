@@ -1,6 +1,6 @@
 <script>
 import Home from './Home.svelte';
-import PlanChangeConfirmed from './PlanChangeConfirmed.svelte';
+import PlanChangeAcknowledged from './PlanChangeAcknowledged.svelte';
 import PlanManager from './PlanManager.svelte';
 
 import { sample } from './store';
@@ -18,11 +18,15 @@ main {
 		<Home />
 	{/if}
 
-	{#if $sample === 'plan_change'}
-		<PlanChangeConfirmed />
+	{#if $sample === 'plan_change_acknowledged'}
+		<PlanChangeAcknowledged />
 	{/if}
 
 	{#if $sample === 'plan_signup'}
 		<PlanManager on_signup="{true}" />
+	{/if}
+
+	{#if $sample === 'plan_change'}
+		<PlanManager on_signup="{false}" />
 	{/if}
 </main>

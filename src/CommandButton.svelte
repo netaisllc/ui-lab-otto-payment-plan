@@ -1,16 +1,27 @@
 <script>
 import { createEventDispatcher } from 'svelte';
 
-export let text = 'Confirm Plan';
 export let theme = 'primary';
+export let on_signup = false;
 
 const send = createEventDispatcher();
 
-const confirm = (e) => {
-	send('event', { topic: 'PLAN_CONFIRMED' });
+const emit = (e) => {
+	send('event', { topic: 'PLAN_COMMAND_CLICKED' });
+};
+
+const developLabel = (on_signup, theme) => {
+	if (theme === 'inverted') {
+		return 'Dashboard';
+	}
+	if (on_signup) {
+		return 'Confirm Plan';
+	}
+	return 'Update Plan';
 };
 
 $: cls = theme === 'primary' ? 'primary' : 'inverted';
+$: label = developLabel(on_signup, theme);
 </script>
 
 <style>
@@ -44,5 +55,5 @@ $: cls = theme === 'primary' ? 'primary' : 'inverted';
 </style>
 
 <div class="container-button">
-	<button class="button text-standard {cls}" on:click="{confirm}">{text}</button>
+	<button class="button text-standard {cls}" on:click="{emit}">{label}</button>
 </div>
