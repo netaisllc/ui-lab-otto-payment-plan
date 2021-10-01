@@ -2,6 +2,7 @@
 import Home from './Home.svelte';
 import PlanChangeAcknowledged from './PlanChangeAcknowledged.svelte';
 import PlanManager from './PlanManager.svelte';
+import Parade from './Parade.svelte';
 
 import { sample } from './store';
 </script>
@@ -28,5 +29,9 @@ main {
 
 	{#if $sample === 'plan_change'}
 		<PlanManager on_signup="{false}" />
+	{/if}
+
+	{#if $sample === 'logo_march'}
+		<Parade />
 	{/if}
 </main>

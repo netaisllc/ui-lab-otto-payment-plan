@@ -5,6 +5,7 @@ import { sample, totalAmount } from './store';
 const planChangeAcknowledged = () => ($sample = 'plan_change_acknowledged');
 const planChange = () => ($sample = 'plan_change');
 const planSignup = () => ($sample = 'plan_signup');
+const logoMarch = () => ($sample = 'logo_march');
 </script>
 
 <style>
@@ -101,6 +102,10 @@ input {
 		<div class="container-view flx aln-center jst-between">
 			<button on:click="{planChangeAcknowledged}">Plan Change Acknowledgement</button>
 			<input bind:value="{$totalAmount}" />
+		</div>
+
+		<div class="container-view flx aln-center jst-between">
+			<button on:click="{logoMarch}">Logo March</button>
 		</div>
 	</div>
 </section>

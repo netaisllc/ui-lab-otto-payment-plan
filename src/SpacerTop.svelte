@@ -15,4 +15,4 @@ export let theme = 'default';
 }
 </style>
 
-<div class="spacer-top reduce-to-30px {theme}"></div>
+<div class="spacer-top {theme}"></div>
